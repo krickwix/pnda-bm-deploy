@@ -1,6 +1,6 @@
 # bare-metal pnda
 ## principles
-The PNDA bare-metal deployment technics is close to the OpenStack deployment’s one. To deploy PNDA on top of bare-metal nodes, OpenStack platform services are used. The two main services involved in this process are ironic and heat.
+The PNDA bare-metal deployment technics is close to the OpenStack deployment one. To deploy PNDA on top of bare-metal nodes, OpenStack platform services are used. The two main services involved in this process are ironic and heat.
 By default, bare-metal nodes on top of which PNDA is to be deployed shall implement an IPMI interface for power management and shall be able to boot using PXE to boot and deploy an operating system. By default we will make use of the pxe_ipmitool ironic driver which is generic enough to manage power management and pxe boot on a vast majority of servers.
 The high level deployment steps are (assuming the deployment environment is available and the hardware has been set-up, including its networks):
 
@@ -20,8 +20,8 @@ chmod 0440 /etc/sudoers.d/stack
 ```
 Set the hostname properly
 ```
-hostnamectl –set-hostname undercloud.example.com
-hostnamectl –set-hostname --transient undercloud.example.com
+hostnamectl set-hostname undercloud.example.com
+hostnamectl set-hostname --transient undercloud.example.com
 ```
 ensure the /etc/hosts file is correct
 ```
@@ -74,7 +74,7 @@ export NODE_DIST=centos7
 export DELOREAN_TRUNK_REPO="http://trunk.rdoproject.org/centos7-mitaka/current/"
 openstack undercloud install
 
-[…]
+[...]
 
 #############################################################################
 Undercloud install complete.
@@ -119,7 +119,7 @@ export DIB_YUM_REPO_CONF="/etc/yum.repos.d/delorean-deps-mitaka.repo /etc/yum.re
 export NODE_DIST=centos7
 export DELOREAN_TRUNK_REPO="http://trunk.rdoproject.org/centos7-mitaka/current/"
 mkdir ~/images && cd ~/images
-openstack overcloud image build –-all
+openstack overcloud image build --all
 ```
 create the pnda image
 ```
@@ -190,7 +190,7 @@ A final json file will look like:
 ```
 cat ~/instackenv.json
 {
-  “nodes”: [
+  nodes: [
     {
       "name": "node_name",
       "pm_addr": "xxx.xxx.xxx.xxx",
@@ -340,7 +340,7 @@ Check that a storage pool has been created
 ```
 semanage fcontext -a -t virt_image_t '/home/stack/vms(/.*)?'
 restorecon -R /home/stack/vms
-virsh pool-list –all
+virsh pool-list --all
 virsh pool-info vms
 ```
 Hypervisor connectivity
@@ -391,7 +391,7 @@ openstack baremetal list
 | 98da9359-23df-4000-b18d-4c652a2ef59c | pnda-zookeeper-3 | None          | power off   | available          | False       |
 +--------------------------------------+------------------+---------------+-------------+--------------------+-------------+
 ```
-At this point, the power state of the nodes should be different from ‘None’ meaning that the baremetal service successfully retrieved the actual instances power states.
+At this point, the power state of the nodes should be different from None meaning that the baremetal service successfully retrieved the actual instances power states.
 
 Creating the instances flavors
 ```
